@@ -38,6 +38,26 @@ app.use((req, res, next) => {
 
 (async () => {
   const server = await registerRoutes(app);
+// ⬇⬇⬇ Добавь этот блок
+import { db } from "./db";
+import { admins } from "@shared/schema"; // проверь путь, возможно "./shared/schema"
+
+try {
+  const existingAdmins = await db.select().from(admins);
+  if (existingAdmins.length === 0) {
+    await db.insert(admins).values({
+      username: "admin",
+      password: "admin123" // если используешь bcrypt, тут нужно захешировать
+    });
+    console.log("✅ Админ добавлен");
+  } else {
+    console.log("ℹ️ Админ уже существует");
+  }
+} catch (err) {
+  console.error("❌ Ошибка при добавлении админа:", err);
+}
+// ⬆⬆⬆
+
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
