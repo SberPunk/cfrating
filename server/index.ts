@@ -1,6 +1,8 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { db } from "./db"; // ✅ Переместили наверх
+import { admins } from "@shared/schema"; // тоже сюда, если ты его используешь
 
 const app = express();
 app.use(express.json());
@@ -39,8 +41,6 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 // ⬇⬇⬇ Добавь этот блок
-import { db } from "./db";
-import { admins } from "@shared/schema"; // проверь путь, возможно "./shared/schema"
 
 try {
   const existingAdmins = await db.select().from(admins);
