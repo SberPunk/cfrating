@@ -2,7 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { db } from "./db"; // ✅ Переместили наверх
-import { admins } from "@shared/schema"; // тоже сюда, если ты его используешь
+import { admin_users } from "@shared/schema"; // тоже сюда, если ты его используешь
 
 const app = express();
 app.use(express.json());
