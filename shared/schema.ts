@@ -63,7 +63,7 @@ export const tagSuggestions = pgTable("tag_suggestions", {
 });
 
 // Admin users table
-export const admin_Users = pgTable("admin_users", {
+export const admin_users = pgTable("admin_users", {
   id: serial("id").primaryKey(),
   username: varchar("username", { length: 50 }).notNull().unique(),
   password: varchar("password", { length: 100 }).notNull(),
