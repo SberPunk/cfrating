@@ -40,14 +40,13 @@ app.use((req, res, next) => {
 
 (async () => {
   const server = await registerRoutes(app);
-// ⬇⬇⬇ Добавь этот блок
-
+  
 try {
-  const existingAdmins = await db.select().from(admins);
+  const existingAdmins = await db.select().from(admin_users);
   if (existingAdmins.length === 0) {
-    await db.insert(admins).values({
+    await db.insert(admin_users).values({
       username: "admin",
-      password: "admin123" // если используешь bcrypt, тут нужно захешировать
+      password: "admin123" // если используешь bcrypt, лучше захешировать
     });
     console.log("✅ Админ добавлен");
   } else {
@@ -56,7 +55,7 @@ try {
 } catch (err) {
   console.error("❌ Ошибка при добавлении админа:", err);
 }
-// ⬆⬆⬆
+
 
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
